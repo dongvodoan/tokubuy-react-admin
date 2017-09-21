@@ -1,10 +1,12 @@
 import agent from './agent';
+import {browserHistory} from 'react-router';
 import {
     ASYNC_START,
     ASYNC_END,
     LOGIN,
     LOGOUT,
-    REGISTER
+    REGISTER,
+    LOGIN_FULFILLED
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
@@ -46,11 +48,17 @@ const promiseMiddleware = store => next => action => {
     next(action);
 };
 
+const checkAuthen = store => next => action => {
+    console.log(action.payload.data);
+    next(action);
+};
+
+
 const localStorageMiddleware = store => next => action => {
-    if (action.type === REGISTER || action.type === LOGIN) {
+    if (action.type === REGISTER || action.type === LOGIN || action.type === LOGIN_FULFILLED) {
         if (!action.error) {
-            window.localStorage.setItem('jwt', action.payload.user.token);
-            agent.setToken(action.payload.user.token);
+            window.localStorage.setItem('jwt', action.payload.data);
+            agent.setToken(action.payload.data);
         }
     } else if (action.type === LOGOUT) {
         window.localStorage.setItem('jwt', '');
@@ -65,4 +73,4 @@ function isPromise(v) {
 }
 
 
-export { promiseMiddleware, localStorageMiddleware }
+export { promiseMiddleware, localStorageMiddleware, checkAuthen }
