@@ -10,6 +10,10 @@ import { fetchUser } from "../actions/userActions";
     };
 })
 
+// const mapDispatchToProps = dispatch => ({
+//
+// });
+
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +21,10 @@ export default class Main extends Component {
 
     componentWillMount() {
         this.props.dispatch(fetchUser());
+    }
+
+    componentWillUnmount() {
+        this.props.dis
     }
 
     render() {
