@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router';
-// import {bindActionCreators} from 'redux';
-// import * as sessionActions from '../actions/sessionActions';
 import {connect} from 'react-redux';
 import {loginUser} from "../actions/sessionActions";
 import PropTypes from 'prop-types';
-import {
-    REDIRECT
-} from '../constants/actionTypes';
-
-// @connect((store) => {
-//     return {
-//         redirectTo: '/users'
-//     };
-// })
+import { ListErrors } from "../components/common/index";
 
 const mapStateToProps = state => ({
    appLoaded: state.common.appLoaded,
-   redirectTo: state.auth.redirectTo
+   redirectTo: state.auth.redirectTo,
+   errors: state.auth.errors
+});
+
+const mapDispatchToProps = dispatch => ({
+   onSubmit: (email, password) =>
+    dispatch(loginUser(email, password))
 });
 
 class Login extends Component {
@@ -44,7 +39,7 @@ class Login extends Component {
 
     onSave (event) {
         event.preventDefault();
-        this.props.dispatch(loginUser(this.state.credentials));
+        this.props.onSubmit(this.state.credentials.email, this.state.credentials.password);
 
     }
 
@@ -65,6 +60,7 @@ class Login extends Component {
                     <div>
                         <h1 className="logo-name">TOKUBUY ADMIN</h1>
                     </div>
+                    <ListErrors errors={this.props.errors}/>
                     <form className="m-t">
                         <div className="form-group">
                             <input type="email" name="email" className="form-control" placeholder="Email" onChange={this.onChange}/>
@@ -83,10 +79,5 @@ class Login extends Component {
 Login.contextTypes = {
   router: PropTypes.object.isRequired
 };
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         actions : bindActionCreators(sessionActions, dispatch)
-//     }
-// }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
