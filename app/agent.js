@@ -1,9 +1,11 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
+import Promise from 'es6-promise';
 
-const superagent = superagentPromise(_superagent, global.Promise);
+const superagent = superagentPromise(_superagent, Promise);
 
-const API_ROOT = 'http://localhost:1338/api/v1';
+const API_ROOT = 'http://localhost:1337/api/v1';
+
 const responseBody = res => res.body;
 
 let token = null;

@@ -1,8 +1,8 @@
 import agent from '../agent';
 
-export function loginUser(credentials) {
+export function loginUser(email, password) {
     return {
         type: "LOGIN",
-        payload: agent.Auth.login(credentials.email, credentials.password)
+        payload: agent.Auth.login(email, password)
     }
 }

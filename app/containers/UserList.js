@@ -24,7 +24,7 @@ export default class Main extends Component {
     }
 
     componentWillUnmount() {
-        this.props.dis
+        // this.props.dis
     }
 
     render() {
