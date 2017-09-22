@@ -6,3 +6,4 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 export const LOGIN_FULFILLED = 'LOGIN_FULFILLED';
+export const REDIRECT = 'REDIRECT';

@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import {bindActionCreators} from 'redux';
-import * as sessionActions from '../actions/sessionActions';
+// import { Link } from 'react-router';
+// import {bindActionCreators} from 'redux';
+// import * as sessionActions from '../actions/sessionActions';
 import {connect} from 'react-redux';
 import {loginUser} from "../actions/sessionActions";
-import authen from "../reducers/authen";
-import {browserHistory} from 'react-router';
+import PropTypes from 'prop-types';
+import {
+    REDIRECT
+} from '../constants/actionTypes';
+
+// @connect((store) => {
+//     return {
+//         redirectTo: '/users'
+//     };
+// })
+
+const mapStateToProps = state => ({
+   appLoaded: state.common.appLoaded,
+   redirectTo: state.auth.redirectTo
+});
 
 class Login extends Component {
 
@@ -22,9 +35,17 @@ class Login extends Component {
         this.onChange = this.onChange.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.redirectTo) {
+            this.context.router.replace(nextProps.redirectTo);
+            // this.props.dispatch({type: REDIRECT})
+        }
+    }
+
     onSave (event) {
         event.preventDefault();
         this.props.dispatch(loginUser(this.state.credentials));
+
     }
 
     onChange(event) {
@@ -59,8 +80,13 @@ class Login extends Component {
     }
 }
 
-export default connect(function (state) {
-    return {
-        status : state.authen
-    }
-})(Login);
+Login.contextTypes = {
+  router: PropTypes.object.isRequired
+};
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         actions : bindActionCreators(sessionActions, dispatch)
+//     }
+// }
+
+export default connect(mapStateToProps)(Login);
