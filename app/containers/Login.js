@@ -23,7 +23,8 @@ class Login extends Component {
             credentials : {
                 email : '',
                 password : ''
-            }
+            },
+            status : 0
         }
         this.onSave = this.onSave.bind(this);
         this.onChange = this.onChange.bind(this);

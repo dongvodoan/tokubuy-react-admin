@@ -5,7 +5,6 @@ import Promise from 'es6-promise';
 const superagent = superagentPromise(_superagent, Promise);
 
 const API_ROOT = 'http://localhost:1337/api/v1';
-
 const responseBody = res => res.body;
 
 let token = null;
@@ -38,7 +37,9 @@ const Auth = {
     register: (username, email, password) =>
         requests.post('/users', { user: { username, email, password } }),
     save: user =>
-        requests.put('/user', { user })
+        requests.put('/user', { user }),
+    token: (token) =>
+        requests.post('/check-token', token)
 };
 
 export default {

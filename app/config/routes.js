@@ -6,6 +6,8 @@ import store from '../store';
 import Main from '../components/layouts/Main';
 import { UserList, Other, Login, Dashboard } from '../containers/index';
 
+import agent from '../agent';
+
 const authTokenExits = (nextState, replace, next) => {
     let token = window.localStorage.getItem('jwt');
     if (token == null) {
