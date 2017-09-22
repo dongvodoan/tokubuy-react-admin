@@ -7,13 +7,7 @@ class ListErrors extends Component {
         if (errors) {
             return (
                 <ul className="alert alert-danger fade in" style={style}>
-                    {
-                      errors.devMessages.map(error => {
-                          return (
-                              <li>{error.msg}</li>
-                          );
-                      })
-                    }
+                    <li>{errors.message}</li>
                 </ul>
             );
         } else {
