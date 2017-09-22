@@ -4,6 +4,8 @@ import {bindActionCreators} from 'redux';
 import * as sessionActions from '../actions/sessionActions';
 import {connect} from 'react-redux';
 import {loginUser} from "../actions/sessionActions";
+import authen from "../reducers/authen";
+import {browserHistory} from 'react-router';
 
 class Login extends Component {
 
@@ -13,7 +15,8 @@ class Login extends Component {
             credentials : {
                 email : '',
                 password : ''
-            }
+            },
+            status : 0
         }
         this.onSave = this.onSave.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -56,10 +59,8 @@ class Login extends Component {
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         actions : bindActionCreators(sessionActions, dispatch)
-//     }
-// }
-
-export default connect()(Login);
+export default connect(function (state) {
+    return {
+        status : state.authen
+    }
+})(Login);
