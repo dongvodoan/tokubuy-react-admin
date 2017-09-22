@@ -6,7 +6,7 @@ const superagent = superagentPromise(_superagent, global.Promise);
 const API_ROOT = 'http://localhost:1338/api/v1';
 const responseBody = res => res.body;
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OWI4ZTgyNWRhOGU5YTA5OTc4ZmZkZWMiLCJlbWFpbCI6InZkZG9uZ2JrQGdtYWlsLmNvbSIsIm5pY2tuYW1lIjoiZG9uZ3ZkIiwiaWF0IjoxNTA1OTAyMjI3LCJleHAiOjE1MDY1MDcwMjd9.CjZ-92enzhAs4HyOGuitiiRK6PPqLGRe3inOaDB1Y3s';
+let token = null;
 const tokenPlugin = req => {
     if (token) {
         req.set('x-access-token', `${token}`);
@@ -32,7 +32,7 @@ const Auth = {
     current: () =>
         requests.get('/user'),
     login: (email, password) =>
-        requests.post('/users/login', { user: { email, password } }),
+        requests.post('/login', { email, password }),
     register: (username, email, password) =>
         requests.post('/users', { user: { username, email, password } }),
     save: user =>
@@ -41,5 +41,6 @@ const Auth = {
 
 export default {
     User,
-    setToken: _token => { token = _token; }
+    setToken: _token => { token = _token; },
+    Auth
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Progress, Navigation, Footer, TopHeader } from './partials/index';
 import { correctHeight, detectBody } from '../../helpers/Helpers';
+import {browserHisory} from 'react-router';
+import agent from "../../agent";
 
 class Main extends React.Component {
 
@@ -26,8 +28,14 @@ class Main extends React.Component {
         )
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        const token = window.localStorage.getItem('jwt');
+        if (token) {
+            agent.setToken(token);
+        }
+    }
 
+    componentDidMount() {
         // Run correctHeight function on load and resize window event
         $(window).bind("load resize", function() {
             correctHeight();
