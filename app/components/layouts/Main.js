@@ -1,10 +1,23 @@
 import React from 'react';
 import { Progress, Navigation, Footer, TopHeader } from './partials/index';
 import { correctHeight, detectBody } from '../../helpers/Helpers';
-import {browserHisory} from 'react-router';
 import agent from "../../agent";
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+const mapStateToProps = state => ({
+    appLoaded: state.common.appLoaded,
+    redirectTo: state.users.redirectTo,
+});
 
 class Main extends React.Component {
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.redirectTo) {
+            this.context.router.replace(nextProps.redirectTo);
+            // this.props.dispatch({type: REDIRECT})
+        }
+    }
 
     render() {
         let wrapperClass = "gray-bg " + this.props.location.pathname;
@@ -51,4 +64,8 @@ class Main extends React.Component {
     }
 }
 
-export default Main
+Main.contextTypes = {
+    router: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps)(Main)
